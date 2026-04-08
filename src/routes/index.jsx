@@ -30,6 +30,26 @@ const routes = [
                 path: "profile",
                 element: lazy(() => import("../pages/HomeTemplate/Profile")),
             },
+            {
+                path: "news",
+                element: lazy(() => import("../pages/HomeTemplate/News")),
+            },
+            {
+                path: "about-us",
+                element: lazy(() => import("../pages/HomeTemplate/AboutUs")),
+            },
+            {
+                path: "privacy-policy",
+                element: lazy(() => import("../pages/HomeTemplate/PrivacyPolicy")),
+            },
+            {
+                path: "terms-of-service",
+                element: lazy(() => import("../pages/HomeTemplate/TermsOfService")),
+            },
+            {
+                path: "contact",
+                element: lazy(() => import("../pages/HomeTemplate/Contact")),
+            },
         ],
     },
     {
