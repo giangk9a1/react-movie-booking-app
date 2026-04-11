@@ -1,51 +1,74 @@
 # React Movie Booking App
 
-Frontend training project for a movie ticket booking system (user side + admin side).
+Frontend training project for a movie ticket booking system (user-facing site + admin).
 
-The main goal is simple: build the app step by step from a clean React foundation, then integrate real APIs and role-based flows.
+The main goal is to grow the app step by step from a lean React setup, then wire real APIs and role-based flows.
 
-## Project Scope
+## Project scope
 
-- Course assignment project (not a production release).
-- Built with a real team workflow: small commits, task branches, PR review.
-- Written to be readable and maintainable for both grading and portfolio review.
+- Course assignment (not a production release).
+- Team-style workflow: small commits, feature branches, PR review.
+- Readable structure for grading and portfolio use.
 
-## Tech Stack (current)
+## Tech stack
 
-- React
-- Vite
-- React Router DOM
-- Redux Toolkit + React Redux
-- Axios
-- Tailwind CSS
-- Flowbite + Flowbite React
-- ESLint
+| Area | Choice |
+|------|--------|
+| UI | React 19, JSX (`.jsx`) |
+| Build | Vite 8, `@vitejs/plugin-react` |
+| Routing | React Router DOM 7 (`BrowserRouter`, lazy-loaded routes) |
+| State | Redux Toolkit + React Redux |
+| HTTP | Axios (`src/services/api.js`) |
+| Styling | Tailwind CSS v4 (`@tailwindcss/vite`), Flowbite theme/plugin via the `flowbite` package (no `flowbite-react`; markup uses HTML + utility classes) |
+| Lint | ESLint (flat config) |
+
+## User-facing routes (English paths)
+
+Defined in `src/routes/index.jsx` (code-split with `lazy()`).
+
+| Path | Page |
+|------|------|
+| `/` | Home |
+| `/login`, `/register` | Login, Register |
+| `/detail/:maPhim`, `/ticketroom/:maLichChieu`, `/profile` | Detail, ticket room, profile |
+| `/news` | News |
+| `/about-us`, `/privacy-policy`, `/terms-of-service`, `/contact` | Static shells (`AboutUs`, `PrivacyPolicy`, `TermsOfService`, `Contact`) |
+| Admin | `/admin`, `/admin/films`, … (see routes file) |
+| `*` | Page not found |
 
 ## Roadmap
 
-Planned milestones (T00–T11). Routing and layout templates are part of **T00** (not a separate task).
+Planned milestones **T00–T11**. Route skeleton and layout templates belong to **T00** (not a separate milestone).
 
-- **Overall Tasks**
-  1. T00 — project setup (includes route skeleton + `HomeTemplate` / `AdminTemplate`)
-  2. T01 — app-core-setup
-  3. T02 — home UI + API
-  4. T03 — detail UI + API
-  5. T04 — booking UI + API
-  6. T05 — auth/profile UI + API
-  7. T06 — route guards and auth flow hardening
-  8. T07 — admin films UI + API
-  9. T08 — admin showtime UI + API
-  10. T09 — admin users UI + API
-  11. T10 — review and refactor
-  12. T11 — deploy and release
-- **Current Focus**
-  - T00 (2/2 done)
-    - [x] Step 1: Base setup
-    - [x] Step 2: Create base folder structure + route skeleton
-  - T01 — app-core-setup (1/1 done)
-    - [x] Step 1: API client + constants + localStorage helpers
+**Overall tasks**
 
-## Repository Structure (at this milestone)
+1. T00 — Project setup (route skeleton + `HomeTemplate` / `AdminTemplate`)
+2. T01 — App core (API client, env, storage helpers)
+3. T02 — Home UI + API
+4. T03 — Detail UI + API
+5. T04 — Booking UI + API
+6. T05 — Auth / profile UI + API
+7. T06 — Route guards and hardened auth
+8. T07 — Admin films UI + API
+9. T08 — Admin showtime UI + API
+10. T09 — Admin users UI + API
+11. T10 — Review and refactor
+12. T11 — Deploy and release
+
+**Current focus**
+
+- **T00** (2/2 done): base setup; base folders + route skeleton
+- **T01** (1/1 done): API client + constants + `localStorage` helpers
+- **T02** (5/5 done)
+  - [x] **Step 1:** `HomeTemplate` — Header / Footer (English copy), mobile nav, Sign in / Sign up; fixed footer; static pages wired: `AboutUs`, `PrivacyPolicy`, `TermsOfService`, `Contact`, `News`
+  - [x] **Step 2:** Banner — `fetchBannerList` in `Home/BannerCarousel/slice.js`, `Home/BannerCarousel/` (loading / error / empty, autoplay, link to `/detail/:maPhim` when available)
+  - [x] **Step 3:** Movie list — `fetchMovieList` in `Home/MovieList/slice.js`, `Home/MovieList/` (tabs Now showing / Coming soon, grid + `MovieCard`, loading / error / empty, links to `/detail/:maPhim`)
+  - [x] **Step 4:** Theater systems — `Theater/slice.js` + reducers in `store`, `Home/Theater/` (logos, clusters, showtimes by cluster; loading / error / empty; links `/detail/:maPhim`, `/ticketroom/:maLichChieu`)
+  - [x] **Step 5:** Home polish — vertical spacing between Banner / Movie list / Theater on `Home/index.jsx` (`flex` + `gap-3`; `MovieList` / `Theater` section padding tightened)
+
+**Next:** T03 — Detail UI + API.
+
+## Repository structure (snapshot)
 
 ```text
 react-movie-booking-app/
@@ -55,7 +78,27 @@ react-movie-booking-app/
     index.css
     constants/
     routes/
+      index.jsx
     pages/
+      HomeTemplate/
+        _components/     # Header, Footer
+        Home/
+          icons.jsx        # T02: PlayIcon, InfoIcon (Banner + Movie list)
+          BannerCarousel/  # T02: slice.js, index.jsx, constants, _components/
+          MovieList/       # T02: slice.js, index.jsx, _components/ (MovieCard)
+          Theater/         # T02: slice.js, index.jsx, _components/
+        AboutUs/
+        PrivacyPolicy/
+        TermsOfService/
+        Contact/
+        News/
+        Login/
+        Register/
+        Detail/
+        TicketRoom/
+        Profile/
+      AdminTemplate/
+      PageNotFound/
     store/
     services/
       api.js
@@ -63,15 +106,12 @@ react-movie-booking-app/
       storage.js
   public/
   package.json
+  vite.config.js
 ```
 
 ## Run locally
 
-Requirements:
-
-- Node.js 18+ (LTS recommended)
-
-Commands:
+**Requirements:** Node.js 18+ (LTS recommended)
 
 ```bash
 npm install
@@ -79,7 +119,7 @@ cp .env.example .env
 npm run dev
 ```
 
-Environment variables (copy from `.env.example` and fill values):
+**Environment variables** (from `.env.example`):
 
 ```bash
 VITE_API_BASE_URL=https://movienew.cybersoft.edu.vn/api/
@@ -87,11 +127,13 @@ VITE_TOKEN_CYBERSOFT=YOUR_TOKEN_CYBERSOFT_HERE
 VITE_MA_NHOM=YOUR_MA_NHOM_HERE
 ```
 
-Then open the URL shown in terminal (usually `http://localhost:5173`).
+Open the URL printed in the terminal (usually `http://localhost:5173`).
 
-## NPM Scripts
+## NPM scripts
 
-- `npm run dev` - start development server
-- `npm run build` - build for production
-- `npm run preview` - preview production build
-- `npm run lint` - run ESLint
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Dev server |
+| `npm run build` | Production build |
+| `npm run preview` | Preview production build |
+| `npm run lint` | ESLint |

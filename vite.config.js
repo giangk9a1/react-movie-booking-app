@@ -12,7 +12,7 @@ export default defineConfig({
             "@services": path.resolve(__dirname, "./src/services"),
             "@components": path.resolve(__dirname, "./src/components"),
             "@routes": path.resolve(__dirname, "./src/routes"),
-            "@constants": path.resolve(__dirname, "./src/constants")
+            "@constants": path.resolve(__dirname, "./src/constants"),
         },
     },
 });
