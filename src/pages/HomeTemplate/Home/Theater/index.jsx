@@ -79,7 +79,7 @@ export default function Theater() {
     return (
         <section
             id="theater-system"
-            className="mx-auto max-w-7xl px-8 pb-24"
+            className="mx-auto max-w-7xl px-8 py-6 md:py-8"
             aria-labelledby="theater-heading"
         >
             <h2

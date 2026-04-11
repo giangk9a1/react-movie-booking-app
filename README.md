@@ -59,14 +59,14 @@ Planned milestones **T00–T11**. Route skeleton and layout templates belong to 
 
 - **T00** (2/2 done): base setup; base folders + route skeleton
 - **T01** (1/1 done): API client + constants + `localStorage` helpers
-- **T02** (4/5 steps, in progress)
+- **T02** (5/5 done)
   - [x] **Step 1:** `HomeTemplate` — Header / Footer (English copy), mobile nav, Sign in / Sign up; fixed footer; static pages wired: `AboutUs`, `PrivacyPolicy`, `TermsOfService`, `Contact`, `News`
-  - [x] **Step 2:** Banner — `fetchBannerList` in `bannerSlice`, `BannerCarousel` on Home (loading / error / empty, autoplay, link to `/detail/:maPhim` when available)
-  - [x] **Step 3:** Movie list — `fetchMovieList` in `movieSlice`, `MovieList` on Home (tabs Now showing / Coming soon, grid + `MovieCard`, loading / error / empty, links to `/detail/:maPhim`)
+  - [x] **Step 2:** Banner — `fetchBannerList` in `Home/BannerCarousel/slice.js`, `Home/BannerCarousel/` (loading / error / empty, autoplay, link to `/detail/:maPhim` when available)
+  - [x] **Step 3:** Movie list — `fetchMovieList` in `Home/MovieList/slice.js`, `Home/MovieList/` (tabs Now showing / Coming soon, grid + `MovieCard`, loading / error / empty, links to `/detail/:maPhim`)
   - [x] **Step 4:** Theater systems — `Theater/slice.js` + reducers in `store`, `Home/Theater/` (logos, clusters, showtimes by cluster; loading / error / empty; links `/detail/:maPhim`, `/ticketroom/:maLichChieu`)
-  - [ ] **Step 5:** Home polish — compose / unify messaging, final UX
+  - [x] **Step 5:** Home polish — vertical spacing between Banner / Movie list / Theater on `Home/index.jsx` (`flex` + `gap-3`; `MovieList` / `Theater` section padding tightened)
 
-**Next:** T02 Step 5 — Home polish (optional pass over loading/error copy and spacing).
+**Next:** T03 — Detail UI + API.
 
 ## Repository structure (snapshot)
 
@@ -83,10 +83,10 @@ react-movie-booking-app/
       HomeTemplate/
         _components/     # Header, Footer
         Home/
-          bannerSlice.js
-          movieSlice.js
-          Theater/         # T02: slice.js, index.jsx, _components/ (theater UI)
-          _components/   # BannerCarousel, MovieList (T02)
+          icons.jsx        # T02: PlayIcon, InfoIcon (Banner + Movie list)
+          BannerCarousel/  # T02: slice.js, index.jsx, constants, _components/
+          MovieList/       # T02: slice.js, index.jsx, _components/ (MovieCard)
+          Theater/         # T02: slice.js, index.jsx, _components/
         AboutUs/
         PrivacyPolicy/
         TermsOfService/

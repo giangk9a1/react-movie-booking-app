@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMovieList } from "@pages/HomeTemplate/Home/movieSlice";
-import MovieCard from "./MovieCard";
+import { fetchMovieList } from "./slice";
+import MovieCard from "./_components/MovieCard";
 
 const TAB_PLAYING = "playing";
 const TAB_UPCOMING = "upcoming";
@@ -52,7 +52,7 @@ export default function MovieList() {
     return (
         <section
             id="movie-list"
-            className="mx-auto max-w-7xl px-8 py-24"
+            className="mx-auto max-w-7xl px-8 py-6 md:py-8"
             aria-labelledby="movie-list-heading"
         >
             <div className="mb-16 flex flex-col items-end justify-between gap-6 md:flex-row">

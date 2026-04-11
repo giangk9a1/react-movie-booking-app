@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "flowbite-react";
 import { WRAPPER_CLASS } from "./constants";
-import BannerSlide from "./BannerSlide";
-import BannerOverlay from "./BannerOverlay";
-import BannerLoading from "./BannerLoading";
-import BannerError from "./BannerError";
-import BannerEmpty from "./BannerEmpty";
-import useBannerData from "./hooks/useBannerData";
+import { fetchBannerList } from "./slice";
+import BannerSlide from "./_components/BannerSlide";
+import BannerOverlay from "./_components/BannerOverlay";
+import BannerLoading from "./_components/BannerLoading";
+import BannerError from "./_components/BannerError";
+import BannerEmpty from "./_components/BannerEmpty";
 
 const carouselTheme = {
     root: {
@@ -66,7 +67,21 @@ function NavArrowGlyph({ direction }) {
 }
 
 export default function BannerCarousel() {
-    const { banners, loading, error, refetch } = useBannerData();
+    const dispatch = useDispatch();
+    const { data, loading, error } = useSelector((state) => state.bannerReducer);
+
+    const banners = useMemo(() => {
+        return Array.isArray(data) ? data : [];
+    }, [data]);
+
+    const refetch = useCallback(() => {
+        dispatch(fetchBannerList());
+    }, [dispatch]);
+
+    useEffect(() => {
+        refetch();
+    }, [refetch]);
+
     const [activeIndex, setActiveIndex] = useState(0);
 
     const safeIndex = Math.min(activeIndex, banners.length - 1);

@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import bannerReducer from "../pages/HomeTemplate/Home/bannerSlice";
-import movieReducer from "../pages/HomeTemplate/Home/movieSlice";
+import bannerReducer from "@pages/HomeTemplate/Home/BannerCarousel/slice";
+import movieReducer from "@pages/HomeTemplate/Home/MovieList/slice";
 import {theaterSystemsReducer, theaterClustersReducer, theaterShowtimesReducer} from "@pages/HomeTemplate/Home/Theater/slice";
 
 const store = configureStore({

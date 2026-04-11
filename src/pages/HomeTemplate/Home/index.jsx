@@ -1,10 +1,10 @@
-import BannerCarousel from "./_components/BannerCarousel";
-import MovieList from "./_components/MovieList";
+import BannerCarousel from "./BannerCarousel";
+import MovieList from "./MovieList";
 import Theater from "./Theater";
 
 export default function Home() {
     return (
-        <div className="w-full">
+        <div className="flex w-full flex-col gap-3">
             <BannerCarousel />
             <MovieList />
             <Theater />
