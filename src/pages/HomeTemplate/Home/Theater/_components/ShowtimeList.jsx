@@ -34,21 +34,23 @@ function ClusterHeading({ clusterName, clusterAddress }) {
 export default function ShowtimeList({ movies, clusterName, clusterAddress }) {
     if (movies.length === 0) {
         return (
-            <div className="flex h-[640px] max-h-[640px] flex-col rounded-xl border border-white/10 bg-zinc-900/60 p-4">
+            <div className="flex h-[640px] max-h-[640px] w-full max-w-full min-w-0 flex-col rounded-xl border border-white/10 bg-zinc-900/60 p-4">
                 <ClusterHeading
                     clusterName={clusterName}
                     clusterAddress={clusterAddress}
                 />
-                <ColumnEmpty
-                    compact
-                    description="No showtimes found for this cluster."
-                />
+                <div className="flex min-h-0 min-w-0 flex-1 items-center justify-center">
+                    <ColumnEmpty
+                        className="rounded-lg border border-white/10 bg-zinc-900/40 px-4 py-10 text-center"
+                        description="No showtimes found for this cluster."
+                    />
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="flex h-[640px] max-h-[640px] flex-col rounded-xl border border-white/10 bg-zinc-900/60 p-4">
+        <div className="flex h-[640px] max-h-[640px] w-full max-w-full min-w-0 flex-col rounded-xl border border-white/10 bg-zinc-900/60 p-4">
             <ClusterHeading
                 clusterName={clusterName}
                 clusterAddress={clusterAddress}

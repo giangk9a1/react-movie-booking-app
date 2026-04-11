@@ -4,7 +4,7 @@ export default function TheaterSystemList({
     onSelectSystem,
 }) {
     return (
-        <div className="h-[640px] max-h-[640px] rounded-xl border border-white/10 bg-zinc-900/60 p-3">
+        <div className="h-[640px] max-h-[640px] w-full max-w-full min-w-0 rounded-xl border border-white/10 bg-zinc-900/60 p-3">
             <div className="theater-scrollbar h-full space-y-3 overflow-y-auto overflow-x-hidden pr-1">
                 {theaterSystems.map((item, index) => {
                     const isActive = item.maHeThongRap === selectedSystemCode;

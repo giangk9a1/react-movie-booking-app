@@ -12,6 +12,9 @@ import ErrorBox from "./_components/ErrorBox";
 import ColumnSkeleton from "./_components/ColumnSkeleton";
 import ColumnEmpty from "./_components/ColumnEmpty";
 
+const emptyTheaterColumn =
+    "flex h-[640px] max-h-[640px] flex-col items-center justify-center rounded-xl border border-white/10 bg-zinc-900/60 p-4 text-center";
+
 export default function Theater() {
     const dispatch = useDispatch();
 
@@ -79,7 +82,7 @@ export default function Theater() {
     return (
         <section
             id="theater-system"
-            className="mx-auto max-w-7xl px-8 py-6 md:py-8"
+            className="mx-auto w-full min-w-0 max-w-7xl overflow-x-hidden px-8 py-6 md:py-8"
             aria-labelledby="theater-heading"
         >
             <h2
@@ -89,96 +92,106 @@ export default function Theater() {
                 Theater systems
             </h2>
 
-            <div className="grid gap-4 lg:grid-cols-[96px_320px_1fr]">
-                {theaterSystemsState?.loading ? (
-                    <ColumnSkeleton
-                        count={6}
-                        itemClassName="h-14"
-                        wrapperClassName="p-3"
-                    />
-                ) : theaterSystemsState?.error ? (
-                    <ErrorBox
-                        message={theaterSystemsState.error}
-                        onRetry={() => dispatch(fetchTheaterSystems())}
-                    />
-                ) : theaterSystems.length === 0 ? (
-                    <ColumnEmpty
-                        title="No theater systems"
-                        description="The API returned no theater chains. Try again later."
-                    />
-                ) : (
-                    <TheaterSystemList
-                        theaterSystems={theaterSystems}
-                        selectedSystemCode={currentSystemCode}
-                        onSelectSystem={handleSelectSystem}
-                    />
-                )}
+            <div className="grid w-full min-w-0 grid-cols-1 gap-4 lg:grid-cols-[96px_320px_minmax(0,1fr)] lg:items-stretch">
+                <div className="min-w-0">
+                    {theaterSystemsState?.loading ? (
+                        <ColumnSkeleton
+                            count={6}
+                            itemClassName="h-14"
+                            wrapperClassName="p-3"
+                        />
+                    ) : theaterSystemsState?.error ? (
+                        <ErrorBox
+                            message={theaterSystemsState.error}
+                            onRetry={() => dispatch(fetchTheaterSystems())}
+                        />
+                    ) : theaterSystems.length === 0 ? (
+                        <ColumnEmpty
+                            className={emptyTheaterColumn}
+                            title="No theater systems"
+                            description="The API returned no theater chains. Try again later."
+                        />
+                    ) : (
+                        <TheaterSystemList
+                            theaterSystems={theaterSystems}
+                            selectedSystemCode={currentSystemCode}
+                            onSelectSystem={handleSelectSystem}
+                        />
+                    )}
+                </div>
 
-                {theaterSystemsState?.loading ||
-                theaterClustersState?.loading ? (
-                    <ColumnSkeleton
-                        count={5}
-                        itemClassName="h-20"
-                        wrapperClassName="p-4"
-                    />
-                ) : theaterClustersState?.error ? (
-                    <ErrorBox
-                        message={theaterClustersState.error}
-                        onRetry={() =>
-                            dispatch(
-                                fetchTheaterClusters(currentSystemCode),
-                            )
-                        }
-                    />
-                ) : !currentSystemCode ? (
-                    <ColumnEmpty
-                        title="Select a chain"
-                        description="Pick a theater chain in the first column."
-                    />
-                ) : theaterClusters.length === 0 ? (
-                    <ColumnEmpty
-                        title="No clusters"
-                        description="This chain has no clusters in the API response."
-                    />
-                ) : (
-                    <TheaterClusterList
-                        theaterClusters={theaterClusters}
-                        selectedClusterCode={currentClusterCode}
-                        onSelectCluster={setSelectedClusterCode}
-                    />
-                )}
+                <div className="min-w-0">
+                    {theaterSystemsState?.loading ||
+                    theaterClustersState?.loading ? (
+                        <ColumnSkeleton
+                            count={5}
+                            itemClassName="h-20"
+                            wrapperClassName="p-4"
+                        />
+                    ) : theaterClustersState?.error ? (
+                        <ErrorBox
+                            message={theaterClustersState.error}
+                            onRetry={() =>
+                                dispatch(
+                                    fetchTheaterClusters(currentSystemCode),
+                                )
+                            }
+                        />
+                    ) : !currentSystemCode ? (
+                        <ColumnEmpty
+                            className={emptyTheaterColumn}
+                            title="Select a chain"
+                            description="Pick a theater chain in the first column."
+                        />
+                    ) : theaterClusters.length === 0 ? (
+                        <ColumnEmpty
+                            className={emptyTheaterColumn}
+                            title="No clusters"
+                            description="This chain has no clusters in the API response."
+                        />
+                    ) : (
+                        <TheaterClusterList
+                            theaterClusters={theaterClusters}
+                            selectedClusterCode={currentClusterCode}
+                            onSelectCluster={setSelectedClusterCode}
+                        />
+                    )}
+                </div>
 
-                {(theaterClustersState?.loading && currentSystemCode) ||
-                theaterShowtimesState?.loading ? (
-                    <ColumnSkeleton
-                        count={4}
-                        itemClassName="h-24"
-                        wrapperClassName="p-4"
-                    />
-                ) : theaterShowtimesState?.error ? (
-                    <ErrorBox
-                        message={theaterShowtimesState.error}
-                        onRetry={() =>
-                            dispatch(
-                                fetchTheaterShowtimes({
-                                    theaterSystemCode: currentSystemCode,
-                                    clusterCode: currentClusterCode,
-                                }),
-                            )
-                        }
-                    />
-                ) : !currentSystemCode || !currentClusterCode ? (
-                    <ColumnEmpty
-                        title="Showtimes"
-                        description="Pick a chain and a cluster to load showtimes."
-                    />
-                ) : (
-                    <ShowtimeList
-                        movies={movies}
-                        clusterName={activeClusterName}
-                        clusterAddress={activeClusterAddress}
-                    />
-                )}
+                <div className="min-h-0 min-w-0 w-full max-w-full overflow-x-hidden">
+                    {(theaterClustersState?.loading && currentSystemCode) ||
+                    theaterShowtimesState?.loading ? (
+                        <ColumnSkeleton
+                            count={4}
+                            itemClassName="h-24"
+                            wrapperClassName="p-4"
+                        />
+                    ) : theaterShowtimesState?.error ? (
+                        <ErrorBox
+                            message={theaterShowtimesState.error}
+                            onRetry={() =>
+                                dispatch(
+                                    fetchTheaterShowtimes({
+                                        theaterSystemCode: currentSystemCode,
+                                        clusterCode: currentClusterCode,
+                                    }),
+                                )
+                            }
+                        />
+                    ) : !currentSystemCode || !currentClusterCode ? (
+                        <ColumnEmpty
+                            className={emptyTheaterColumn}
+                            title="Showtimes"
+                            description="Pick a chain and a cluster to load showtimes."
+                        />
+                    ) : (
+                        <ShowtimeList
+                            movies={movies}
+                            clusterName={activeClusterName}
+                            clusterAddress={activeClusterAddress}
+                        />
+                    )}
+                </div>
             </div>
         </section>
     );

@@ -4,7 +4,7 @@ export default function TheaterClusterList({
     onSelectCluster,
 }) {
     return (
-        <div className="h-[640px] max-h-[640px] rounded-xl border border-white/10 bg-zinc-900/60 p-4">
+        <div className="h-[640px] max-h-[640px] w-full max-w-full min-w-0 rounded-xl border border-white/10 bg-zinc-900/60 p-4">
             <div className="theater-scrollbar h-full overflow-y-auto overflow-x-hidden pr-1">
                 <div className="space-y-3">
                     {theaterClusters.map((item, index) => {

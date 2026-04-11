@@ -6,7 +6,7 @@ export default function ColumnSkeleton({
 }) {
     return (
         <div
-            className={`${containerClassName} rounded-xl border border-white/10 bg-zinc-900/60 ${wrapperClassName}`}
+            className={`${containerClassName} w-full max-w-full min-w-0 rounded-xl border border-white/10 bg-zinc-900/60 ${wrapperClassName}`}
         >
             <div className="space-y-3">
                 {Array.from({ length: count }).map((_, index) => (
